@@ -363,70 +363,82 @@ namespace kgycode
 
                 if (reader != null) reader.Close();
 
-                //모든 입력작업이 될 준비단계
-                for (int j = 0; j < dataGridView1.RowCount; j++) //행
+                MySqlTransaction tran = null;
+                tran = conn.BeginTransaction(IsolationLevel.ReadCommitted);
+
+                try
                 {
-                    if (dataGridView1.Rows[j].Cells[0].Value == null) continue;
-
-                    for (int col = 1; col < dataGridView1.ColumnCount; col++)
+                    //모든 입력작업이 될 준비단계
+                    for (int j = 0; j < dataGridView1.RowCount; j++) //행
                     {
-                        if (dataGridView1.Rows[j].Cells[0].Value.ToString() == "A")
+                        if (dataGridView1.Rows[j].Cells[0].Value == null) continue;
+
+                        for (int col = 1; col < dataGridView1.ColumnCount; col++)
                         {
-                            //insert 
-                            //insert sql 생성
-                            //insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use)
-                            // values('1', '1', 2, 0, 'Y')
+                            if (dataGridView1.Rows[j].Cells[0].Value.ToString() == "A")
+                            {
+                                //insert 
+                                //insert sql 생성
+                                //insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use)
+                                // values('1', '1', 2, 0, 'Y')
 
-                            String del_sql = "insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use) " +
-                                                      "values(@val1, @val2,@val3, @val4, @val5 )";
-                            cmd = new MySqlCommand();  //cmd sql위한 준비작업
-                            cmd.Connection = conn;
-                            cmd.CommandText = del_sql;   //실행시킬 sql문장이 무엇인지 지정
-                                                         // cmd.Prepare();
-                            cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[1].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[2].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[3].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[4].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
-                            cmd.ExecuteNonQuery();
+                                String del_sql = "insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use) " +
+                                                          "values(@val1, @val2,@val3, @val4, @val5 )";
+                                cmd = new MySqlCommand();  //cmd sql위한 준비작업
+                                cmd.Connection = conn;
+                                cmd.CommandText = del_sql;   //실행시킬 sql문장이 무엇인지 지정
+                                                             // cmd.Prepare();
+                                cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[1].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[3].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[4].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                                cmd.ExecuteNonQuery();
 
-                            dataGridView1.Rows[j].Cells[0].Value = "";
+                                dataGridView1.Rows[j].Cells[0].Value = "";
 
+                            }
+                            else
+                            {
+                                //update sql 생성
+                                //uadate kgy_cdg set cdg_grpnm='2', cdg_digit=3, cdg_length=1,  cdg_use='Y'
+                                //where cdg_grpcd = '1'
+
+                                String update_sql = "update kgy_cdg set " +
+                                                                "cdg_grpcd=@val1, " +
+                                                                "cdg_grpnm=@val2, " +
+                                                                "cdg_digit=@val3, " +
+                                                                "cdg_length=@val4, " +
+                                                                "cdg_use=@val5 " +
+                                                                "where cdg_grpcd=@val1";
+
+                                cmd = new MySqlCommand();  //cmd sql위한 준비작업
+                                cmd.Connection = conn;
+                                cmd.CommandText = update_sql;
+
+                                ;   //실행시킬 sql문장이 무엇인지 지정
+                                    // cmd.Prepare();
+                                cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[1].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[3].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[4].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                                cmd.ExecuteNonQuery();
+
+                                dataGridView1.Rows[j].Cells[0].Value = "";
+                            }
+                            tran.Commit();
+                            //sql 실행
+                            init_btn(); //원상복구
                         }
-                        else
-                        {
-                            //update sql 생성
-                            //uadate kgy_cdg set cdg_grpnm='2', cdg_digit=3, cdg_length=1,  cdg_use='Y'
-                            //where cdg_grpcd = '1'
-
-                            String update_sql = "update kgy_cdg set " +
-                                                            "cdg_grpcd=@val1, " +
-                                                            "cdg_grpnm=@val2, " +
-                                                            "cdg_digit=@val3, " +
-                                                            "cdg_length=@val4, " +
-                                                            "cdg_use=@val5 " +
-                                                            "where cdg_grpcd=@val1";
-                                                     
-                            cmd = new MySqlCommand();  //cmd sql위한 준비작업
-                            cmd.Connection = conn;
-                            cmd.CommandText = update_sql;
-
-;   //실행시킬 sql문장이 무엇인지 지정
-                                                         // cmd.Prepare();
-                            cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[1].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[2].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[3].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[4].Value.ToString());
-                            cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
-                            cmd.ExecuteNonQuery();
-
-                            dataGridView1.Rows[j].Cells[0].Value = "";
-                        }
-                        //sql 실행
-                        init_btn(); //원상복구
                     }
-
                 }
+                catch(Exception ex)
+                {
+                    tran.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return;
+                }                
 
             }
         }
