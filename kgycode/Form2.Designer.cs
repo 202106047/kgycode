@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.unitdigit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit_use = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unit_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -211,6 +211,7 @@
             this.t_unit_mn2.Name = "t_unit_mn2";
             this.t_unit_mn2.Size = new System.Drawing.Size(150, 21);
             this.t_unit_mn2.TabIndex = 18;
+            this.t_unit_mn2.TextChanged += new System.EventHandler(this.t_unit_mn2_TextChanged);
             // 
             // label4
             // 
@@ -227,6 +228,7 @@
             this.t_unit_mn.Name = "t_unit_mn";
             this.t_unit_mn.Size = new System.Drawing.Size(150, 21);
             this.t_unit_mn.TabIndex = 17;
+            this.t_unit_mn.TextChanged += new System.EventHandler(this.t_unit_mn_TextChanged);
             // 
             // t_unit_cd
             // 
@@ -234,6 +236,8 @@
             this.t_unit_cd.Name = "t_unit_cd";
             this.t_unit_cd.Size = new System.Drawing.Size(150, 21);
             this.t_unit_cd.TabIndex = 16;
+            this.t_unit_cd.TextChanged += new System.EventHandler(this.t_unit_cd_TextChanged);
+            this.t_unit_cd.Leave += new System.EventHandler(this.t_unit_cd_Leave);
             // 
             // panel1
             // 
@@ -246,14 +250,14 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.status,
@@ -270,6 +274,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(719, 413);
             this.dataGridView1.TabIndex = 7;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // unitcode
             // 
@@ -284,6 +289,7 @@
             this.button6.TabIndex = 29;
             this.button6.Text = "취소";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button5
             // 
@@ -293,6 +299,7 @@
             this.button5.TabIndex = 28;
             this.button5.Text = "확인";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -302,6 +309,7 @@
             this.button4.TabIndex = 27;
             this.button4.Text = "삭제";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -311,6 +319,7 @@
             this.button3.TabIndex = 26;
             this.button3.Text = "수정";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -320,6 +329,7 @@
             this.button2.TabIndex = 25;
             this.button2.Text = "입력";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
