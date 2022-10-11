@@ -96,14 +96,12 @@ namespace kgycode
             dataGridView1.Rows.Clear();
 
             string sql1 = "select unit_grpcd, unit_cd, unit_mn, unit_mn2, unit_seq, unit_use from kgy_unit " +
-                                 " where unit_grpcd=@unit_grpcd";
+                                 " where unit_grpcd=@cdg_grpcd";
             if (reader != null) reader.Close(); 
             cmd = new MySqlCommand();  //cmd sql위한 준비작업
             cmd.Connection = conn;
             cmd.CommandText = sql1;   //실행시킬 sql문장이 무엇인지 지정
-            cmd.Parameters.AddWithValue
-                
-                ("@unit_grpcd", comboBox2.Text);
+            cmd.Parameters.AddWithValue("@cdg_grpcd", comboBox2.Text);
 
             reader = cmd.ExecuteReader();
             int i = 0;
@@ -210,7 +208,8 @@ namespace kgycode
             }
             dataGridView1.Rows[rowIdx].Cells["status"].Value = 'A';
             dataGridView1.CurrentCell = dataGridView1.Rows[rowIdx].Cells[0];
-
+            dataGridView1.Rows[rowIdx].Cells[6].Value = comboBox2.Text;
+            dataGridView1.Rows[rowIdx].Cells[7].Value = comboBox3.Text;
             t_unit_cd.Focus();
         }
 
@@ -257,7 +256,7 @@ namespace kgycode
 
             }
 
-            if (ctl.Name.ToString() == "t_use")
+            if (ctl.Name.ToString() == "t_unit_use")
             {
                 if (!(pi.GetValue(ctl).ToString() == "Y" || pi.GetValue(ctl).ToString() == "N"))
                 {
@@ -290,7 +289,7 @@ namespace kgycode
                         t_unit_cd.Focus();
                         MessageBox.Show(t_unit_cd.Text + "코드는 입력 될 자료이거나 입력되어 있는 코드입니다");
                         t_unit_cd.Text = "";
-                        dataGridView1.Rows[rowidx].Cells["grpcd"].Value = "";
+                        dataGridView1.Rows[rowidx].Cells["unit_cd"].Value = "";
                         return;
                     }
                 }
@@ -340,7 +339,7 @@ namespace kgycode
 
             }
 
-            if (ctl.Name.ToString() == "t_use")
+            if (ctl.Name.ToString() == "t_unit_use")
             {
                 if (!(pi.GetValue(ctl).ToString() == "Y" || pi.GetValue(ctl).ToString() == "N"))
                 {
@@ -384,7 +383,7 @@ namespace kgycode
             }
 
             if ((aa == "") || (aa == null)) return;
-            if ((ctl.Name.ToString() == "t_digit") || (ctl.Name.ToString() == "t_length"))
+            if ((ctl.Name.ToString() == "unit_mn2") || (ctl.Name.ToString() == "unit_seq"))
             {
                 //값이 숫자가 아니면 error;                    
                 if (int.TryParse(aa, out value) == false)
@@ -395,7 +394,7 @@ namespace kgycode
 
             }
 
-            if (ctl.Name.ToString() == "t_use")
+            if (ctl.Name.ToString() == "unit_use")
             {
                 if (!(pi.GetValue(ctl).ToString() == "Y" || pi.GetValue(ctl).ToString() == "N"))
                 {
@@ -420,12 +419,12 @@ namespace kgycode
 
             DataGridViewRow row = dataGridView1.CurrentRow;
             //신규 입력중인 자료는 단순하게 Grid에서 제거만 한다.
-            if ((string)row.Cells["status"].Value == "A")
+            if ((char)row.Cells["status"].Value == 'A')
             {
                 dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
                 return;
             }
-            DialogResult result = MessageBox.Show(row.Cells["grpcd"].Value +
+            DialogResult result = MessageBox.Show(row.Cells["unit_cd"].Value +
                 "자료를 삭제하시겠습니까?", "삭제확인", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.No) return;
             //삭제하겠다고
@@ -436,7 +435,7 @@ namespace kgycode
             {
                 //sql로 data 삭제는 여기서 지금은 생략
 
-                String del_sql = "delete from kgy_cdg where cdg_grpcd =  @cdg_grpcd";
+                String del_sql = "delete from kgy_unit where unit_grpcd =  @cdg_grpcd";
                 cmd = new MySqlCommand();  //cmd sql위한 준비작업
                 cmd.Connection = conn;
                 cmd.CommandText = del_sql;   //실행시킬 sql문장이 무엇인지 지정
@@ -481,38 +480,41 @@ namespace kgycode
                 if (reader != null) reader.Close();
 
                 MySqlTransaction tran = null;
-                tran = conn.BeginTransaction(IsolationLevel.ReadCommitted);
+         
 
                 try
                 {
+                    tran = conn.BeginTransaction(IsolationLevel.ReadCommitted);
                     //모든 입력작업이 될 준비단계
                     for (int j = 0; j < dataGridView1.RowCount; j++) //행
                     {
-                        if (dataGridView1.Rows[j].Cells[0].Value == null) continue;
 
-                        for (int col = 1; col < dataGridView1.ColumnCount; col++)
-                        {
-                            if (dataGridView1.Rows[j].Cells[0].Value.ToString() == "A")
+                        if ((dataGridView1.Rows[i].Cells[0].Value == null) ||
+                (dataGridView1.Rows[i].Cells[0].Value.ToString() == "")) continue;
+
+
+                        if (dataGridView1.Rows[j].Cells[0].Value.ToString() == "A")
                             {
                                 //insert 
                                 //insert sql 생성
                                 //insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use)
                                 // values('1', '1', 2, 0, 'Y')
 
-                                String del_sql = "insert into kgy_cdg (cdg_grpcd, cdg_grpnm,cdg_digit,cdg_length,cdg_use) " +
-                                                          "values(@val1, @val2,@val3, @val4, @val5 )";
+                                String del_sql = "insert into kgy_unit (unit_grpcd, unit_cd, unit_mn, unit_mn2, unit_seq, unit_use) " +
+                                                          "values(@val1, @val2,@val3, @val4, @val5, @val6)";
                                 cmd = new MySqlCommand();  //cmd sql위한 준비작업
                                 cmd.Connection = conn;
                                 cmd.CommandText = del_sql;   //실행시킬 sql문장이 무엇인지 지정
                                                              // cmd.Prepare();
-                                cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[1].Value.ToString());
-                                cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[2].Value.ToString());
-                                cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[3].Value.ToString());
-                                cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[4].Value.ToString());
-                                cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
-                                cmd.ExecuteNonQuery();
+                                cmd.Parameters.AddWithValue("@val1", dataGridView1.Rows[i].Cells[6].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val2", dataGridView1.Rows[i].Cells[1].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val3", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val4", dataGridView1.Rows[i].Cells[3].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[4].Value.ToString());
+                                cmd.Parameters.AddWithValue("@val6", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                              cmd.ExecuteNonQuery();
 
-                                dataGridView1.Rows[j].Cells[0].Value = "";
+                            
 
                             }
                             else
@@ -521,13 +523,13 @@ namespace kgycode
                                 //uadate kgy_cdg set cdg_grpnm='2', cdg_digit=3, cdg_length=1,  cdg_use='Y'
                                 //where cdg_grpcd = '1'
 
-                                String update_sql = "update kgy_cdg set " +
-                                                                "cdg_grpcd=@val1, " +
-                                                                "cdg_grpnm=@val2, " +
-                                                                "cdg_digit=@val3, " +
-                                                                "cdg_length=@val4, " +
-                                                                "cdg_use=@val5 " +
-                                                                "where cdg_grpcd=@val1";
+                                String update_sql = "update kgy_unit set " +
+                                                               "unit_cd=@val1, " +
+                                                                "unit_mn=@val2, " +
+                                                                "unit_mn2=@val3, " +
+                                                                "unit_seq=@val4, " +
+                                                                "unit_use=@val5 " +
+                                                                "where unit_cd=@val1";
 
                                 cmd = new MySqlCommand();  //cmd sql위한 준비작업
                                 cmd.Connection = conn;
@@ -542,13 +544,24 @@ namespace kgycode
                                 cmd.Parameters.AddWithValue("@val5", dataGridView1.Rows[i].Cells[5].Value.ToString());
                                 cmd.ExecuteNonQuery();
 
-                                dataGridView1.Rows[j].Cells[0].Value = "";
+                              
                             }
-                            tran.Commit();
-                            //sql 실행
-                            init_btn(); //원상복구
-                        }
+                          
+                        
                     }
+                    tran.Commit();
+                    for (int j = 0; j < dataGridView1.RowCount; j++) //행
+                    {
+
+                        if ((dataGridView1.Rows[i].Cells[0].Value == null) ||
+                         (dataGridView1.Rows[i].Cells[0].Value.ToString() == "")) continue;
+
+                        dataGridView1.Rows[j].Cells[0].Value = "";
+                    }
+
+
+                        //sql 실행
+                        init_btn(); //원상복구
                 }
                 catch (Exception ex)
                 {

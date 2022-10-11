@@ -28,14 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.unitdigit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit_use = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.uint_mn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit_mn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.unit_cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -53,56 +46,24 @@
             this.t_unit_cd = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.unitcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit_cd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit_mn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit_mn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit_seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unit_use = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.unitdigit = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // unitdigit
-            // 
-            this.unitdigit.HeaderText = "길이";
-            this.unitdigit.Name = "unitdigit";
-            // 
-            // unit_use
-            // 
-            this.unit_use.HeaderText = "사용여부";
-            this.unit_use.Name = "unit_use";
-            this.unit_use.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // unit_seq
-            // 
-            this.unit_seq.HeaderText = "코드SEQ";
-            this.unit_seq.Name = "unit_seq";
-            this.unit_seq.Width = 150;
-            // 
-            // uint_mn2
-            // 
-            this.uint_mn2.HeaderText = "코드명(축약)";
-            this.uint_mn2.Name = "uint_mn2";
-            this.uint_mn2.Width = 150;
-            // 
-            // unit_mn
-            // 
-            this.unit_mn.HeaderText = "코드명(원형)";
-            this.unit_mn.Name = "unit_mn";
-            // 
-            // unit_cd
-            // 
-            this.unit_cd.HeaderText = "단위코드";
-            this.unit_cd.Name = "unit_cd";
-            // 
-            // status
-            // 
-            this.status.HeaderText = "상태";
-            this.status.Name = "status";
-            this.status.Width = 80;
             // 
             // comboBox3
             // 
@@ -161,6 +122,7 @@
             this.t_unit_use.Name = "t_unit_use";
             this.t_unit_use.Size = new System.Drawing.Size(21, 21);
             this.t_unit_use.TabIndex = 21;
+            this.t_unit_use.TextChanged += new System.EventHandler(this.t_unit_mn2_TextChanged);
             // 
             // label1
             // 
@@ -195,6 +157,7 @@
             this.t_unit_seq.Name = "t_unit_seq";
             this.t_unit_seq.Size = new System.Drawing.Size(150, 21);
             this.t_unit_seq.TabIndex = 19;
+            this.t_unit_seq.TextChanged += new System.EventHandler(this.t_unit_mn2_TextChanged);
             // 
             // label3
             // 
@@ -250,20 +213,20 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.status,
             this.unit_cd,
             this.unit_mn,
-            this.uint_mn2,
+            this.unit_mn2,
             this.unit_seq,
             this.unit_use,
             this.unitcode,
@@ -275,11 +238,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(719, 413);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            // 
-            // unitcode
-            // 
-            this.unitcode.HeaderText = "그룹코드";
-            this.unitcode.Name = "unitcode";
             // 
             // button6
             // 
@@ -341,6 +299,50 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // status
+            // 
+            this.status.HeaderText = "상태";
+            this.status.Name = "status";
+            this.status.Width = 80;
+            // 
+            // unit_cd
+            // 
+            this.unit_cd.HeaderText = "단위코드";
+            this.unit_cd.Name = "unit_cd";
+            // 
+            // unit_mn
+            // 
+            this.unit_mn.HeaderText = "코드명(원형)";
+            this.unit_mn.Name = "unit_mn";
+            // 
+            // unit_mn2
+            // 
+            this.unit_mn2.HeaderText = "코드명(축약)";
+            this.unit_mn2.Name = "unit_mn2";
+            this.unit_mn2.Width = 150;
+            // 
+            // unit_seq
+            // 
+            this.unit_seq.HeaderText = "코드SEQ";
+            this.unit_seq.Name = "unit_seq";
+            this.unit_seq.Width = 150;
+            // 
+            // unit_use
+            // 
+            this.unit_use.HeaderText = "사용여부";
+            this.unit_use.Name = "unit_use";
+            this.unit_use.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // unitcode
+            // 
+            this.unitcode.HeaderText = "그룹코드";
+            this.unitcode.Name = "unitcode";
+            // 
+            // unitdigit
+            // 
+            this.unitdigit.HeaderText = "길이";
+            this.unitdigit.Name = "unitdigit";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -371,14 +373,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitdigit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit_use;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit_seq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uint_mn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit_mn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unit_cd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label6;
@@ -396,12 +390,19 @@
         private System.Windows.Forms.TextBox t_unit_cd;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitcode;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit_cd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit_mn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit_mn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit_seq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unit_use;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitcode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn unitdigit;
     }
 }
